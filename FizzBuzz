@@ -1,0 +1,41 @@
+/*
+Fizz Buzz is a classic programming problem. Here is its slightly modified version.
+
+Write a program that takes two integers as the input: the beginning and the end of the interval (both numbers belong to the interval).
+
+The program should output the numbers from this interval, but if the number is divisible by 3, you should output Fizz instead of it; if the number is divisible by 5, output Buzz; and if it is divisible both by 3 and by 5, output FizzBuzz.
+
+Output each number or the word on a separate line.
+*/
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int start = scanner.nextInt();
+        int end = scanner.nextInt();
+        for (int number = start; number <= end; number++) {
+            boolean divisibleBy3 = number % 3 == 0;
+            boolean divisibleBy5 = number % 5 == 0;
+            boolean divisibleBy3and5 = (number % 3 == 0 && number % 5 == 0);
+            String ansStr = "";
+            if (divisibleBy3and5) {
+                ansStr += "FizzBuzz";
+                System.out.println(ansStr);
+                continue;
+            }
+            if (divisibleBy3) {
+                ansStr += "Fizz";
+                System.out.println(ansStr);
+            }
+            if (divisibleBy5) {
+                ansStr += "Buzz";
+                System.out.println(ansStr);
+            }
+            if ("".equals(ansStr)) {
+                ansStr += Integer.toString(number);
+                System.out.println(ansStr);
+            }
+        }
+    }
+}
