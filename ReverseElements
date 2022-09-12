@@ -1,0 +1,28 @@
+/*
+In this task, you need to implement reverseElements method. It should reverse all rows of the twoDimArray as in the example below.
+
+0 0 9 9              9 9 0 0
+1 2 3 4 will become: 4 3 2 1
+5 6 7 8              8 7 6 5
+It is guaranteed that twoDimArray has at least 1 row.
+
+P.S. You don't need to print anything in this task or create a new array: just modify the existing twoDimArray.
+*/
+
+class ArrayOperations {
+    public static void reverseElements(int[][] twoDimArray) {
+        int length = twoDimArray.length;
+        int otherLength = twoDimArray[0].length;
+        for (int i = 0; i < length; i++) {
+            int first = 0;
+            int last = otherLength - 1;
+            while (first < last) {
+                int tmp = twoDimArray[i][first];
+                twoDimArray[i][first] = twoDimArray[i][last];
+                twoDimArray[i][last] = tmp;
+                first++;
+                last--;
+            }
+        }
+    }
+}
