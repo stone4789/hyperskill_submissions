@@ -1,0 +1,94 @@
+/*
+Citizens of the country named Malevia often experiment with the shapes of their rooms. The rooms can be triangular, rectangular, and round.
+
+Write a program that calculates the floor area of the rooms.
+
+Input data format: The type of the room shape and the relevant parameters.
+
+Output data format: The area of the resulting room.
+
+Note that the value of 3.14 is used instead of the number π in Malevia.
+Input format used by the Malevians:
+triangle
+a
+b
+c
+where a, b, and c are lengths of the triangle sides.
+
+rectangle
+a
+b
+where a and b are lengths of the rectangle sides.
+
+circle
+r
+where r is the radius of the circle.
+
+Note that the input values (a, b, c, r) are doubles, and your answer should be too.
+
+
+Sample Input:
+rectangle
+4
+10
+
+Sample Output:
+40.0
+
+
+Sample Input:
+circle
+5
+
+Sample Output:
+78.5
+
+
+Sample Input:
+triangle
+3
+3
+3
+
+Sample Output:
+3.897114317029974
+*/
+
+import java.util.Scanner;
+
+class Main {
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        String shape = scanner.next();
+        switch (shape) {
+            case "triangle" -> System.out.println(calcAreaTriangle());
+            case "rectangle" -> System.out.println(calcAreaRectangle());
+            case "circle" -> System.out.println(calcAreaCircle());
+            //default -> break;
+        }
+    }
+
+    public static String calcAreaTriangle() {
+        double a = scanner.nextDouble();
+        double b = scanner.nextDouble();
+        double c = scanner.nextDouble();
+        double perimeter = (a + b + c) / 2;
+        double ans = Math.sqrt(perimeter * (perimeter - a) * (perimeter - b) * (perimeter - c));
+        return String.format("%.15f", ans);
+    }
+
+    public static String calcAreaRectangle() {
+        double a = scanner.nextDouble();
+        double b = scanner.nextDouble();
+        double ans = a * b;
+        return String.format("%.15f", ans);
+    }
+
+    public static String calcAreaCircle() {
+        double radius = scanner.nextDouble();
+        double roundedPi = 3.14;
+        double ans = roundedPi * radius * radius;
+        return String.format("%.15f", ans);
+    }
+}
