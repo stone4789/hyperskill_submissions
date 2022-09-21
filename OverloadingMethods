@@ -33,7 +33,9 @@ public class Main {
         return Long.MAX_VALUE - val;
     }
 
-    public static int getMaxMinusCurrent(int val) { return Integer.MAX_VALUE - val; }
+    public static int getMaxMinusCurrent(int val) {
+        return Integer.MAX_VALUE - val;
+    }
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
