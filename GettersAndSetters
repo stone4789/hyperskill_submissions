@@ -1,0 +1,40 @@
+/*
+Account
+You are given a class named Account. It has three fields: a long field balance, a string field ownerName, and a boolean flag locked.
+
+Write getters and setters for all fields.
+*/
+
+
+class Account {
+
+    private long balance;
+    private String ownerName;
+    private boolean locked;
+
+    public void setBalance(long balance) {
+        this.balance = balance;
+    }
+
+    public long getBalance() {
+        return this.balance;
+    }
+
+    public void setOwnerName(String ownerName) {
+        if (ownerName != null) {
+            this.ownerName = ownerName;
+        }
+    }
+
+    public String getOwnerName() {
+        return this.ownerName;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public boolean isLocked() {
+        return this.locked;
+    }
+}
