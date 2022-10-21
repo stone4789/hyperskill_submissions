@@ -1,0 +1,58 @@
+/*
+Suppose, we have a utility method to capitalize strings:
+class Util {
+    public static String capitalize(String str) {
+        if (str == null || str.isBlank()) {
+            return str;
+        }
+
+        if (str.length() == 1) {
+            return str.toUpperCase();
+        }
+
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+    }
+}
+Your task is to add some logging to this method so it prints the input string and the string to be returned by the method in the following format:
+
+Before: string
+After: String
+where string is an example of the input string. As you can see, the method has three execution paths and they all must be logged.
+
+
+Sample Input:
+string
+
+Sample Output:
+Before: string
+After: String
+
+
+Sample Input:
+Capitalized
+
+Sample Output:
+Before: Capitalized
+After: Capitalized
+*/
+
+class Util {
+    public static String capitalize(String str) {
+
+        String oldString = new String(str);
+        String upperCaseFirstCharString;
+
+        if (str.isBlank()) {
+            upperCaseFirstCharString = str;
+        } else if (str.length() == 1) {
+            upperCaseFirstCharString = str.toUpperCase();
+        } else {
+            upperCaseFirstCharString = Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        }
+
+        System.out.println("Before: " + oldString);
+        System.out.println("After: " + upperCaseFirstCharString);
+
+        return upperCaseFirstCharString;
+    }
+}
