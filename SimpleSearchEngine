@@ -1,0 +1,135 @@
+import java.io.File
+
+class Search(filePath: String) {
+    private val data: List<String>
+    private val reverseIndexMap: Map<String, Set<Int>>
+
+    init {
+        data = File(filePath).readLines()
+        reverseIndexMap = createReverseIndex()
+        presentMenu()
+    }
+
+    private fun presentMenu() {
+        while (true) {
+            println("\n=== Menu ===")
+            println("1. Find a person (ALL strategy)")
+            println("2. Find a person (ANY strategy)")
+            println("3. Find a person (NONE strategy)")
+            println("4. Print all people")
+            println("0. Exit")
+
+            when (readLine()) {
+                "1" -> executeQuery(SearchStrategy.ALL)
+                "2" -> executeQuery(SearchStrategy.ANY)
+                "3" -> executeQuery(SearchStrategy.NONE)
+                "4" -> printAll()
+                "0" -> break
+                else -> println("\nIncorrect option! Try again.")
+            }
+        }
+        println("Bye! 👋")
+    }
+
+    private fun createReverseIndex(): Map<String, Set<Int>> {
+        val indexMap = mutableMapOf<String, MutableSet<Int>>()
+
+        data.forEachIndexed { index, line ->
+            line.split(" ").forEach { word ->
+                val normalizedWord = word.trim().toLowerCase()
+                if (normalizedWord.isNotEmpty()) {
+                    val indexes = indexMap.getOrPut(normalizedWord) { mutableSetOf() }
+                    indexes.add(index)
+                }
+            }
+        }
+
+        return indexMap
+    }
+
+    private fun executeQuery(strategy: SearchStrategy) {
+        print("Enter query: ")
+        val query = readLine()?.trim()?.toLowerCase()
+
+        if (query.isNullOrBlank()) {
+            println("Invalid query!")
+            return
+        }
+
+        val words = query.split(" ")
+        val result = when (strategy) {
+            SearchStrategy.ALL -> searchAll(words)
+            SearchStrategy.ANY -> searchAny(words)
+            SearchStrategy.NONE -> searchNone(words)
+        }
+
+        if (result.isEmpty()) {
+            println("Not Found")
+        } else {
+            println("\nPeople found:")
+            result.forEach { index ->
+                println(data[index])
+            }
+        }
+    }
+
+    private fun searchAll(words: List<String>): Set<Int> {
+        val allIndexes = mutableSetOf<Int>()
+        words.forEachIndexed { index, word ->
+            val indexes = reverseIndexMap[word]
+            if (index == 0) {
+                allIndexes.addAll(indexes ?: emptySet())
+            } else {
+                allIndexes.retainAll(indexes ?: emptySet())
+            }
+        }
+        return allIndexes
+    }
+
+    private fun searchAny(words: List<String>): Set<Int> {
+        val anyIndexes = mutableSetOf<Int>()
+        words.forEach { word ->
+            val indexes = reverseIndexMap[word]
+            if (indexes != null) {
+                anyIndexes.addAll(indexes)
+            }
+        }
+        return anyIndexes
+    }
+
+    private fun searchNone(words: List<String>): Set<Int> {
+        val allIndexes = mutableSetOf<Int>()
+        reverseIndexMap.values.forEach { indexes ->
+            allIndexes.addAll(indexes)
+        }
+        words.forEach { word ->
+            val indexes = reverseIndexMap[word]
+            if (indexes != null) {
+                allIndexes.removeAll(indexes)
+            }
+        }
+        return allIndexes
+    }
+
+    private fun printAll() {
+        println("\n=== List of people ===")
+        data.forEach { line ->
+            println(line)
+        }
+    }
+}
+
+enum class SearchStrategy {
+    ALL,
+    ANY,
+    NONE
+}
+
+fun main(args: Array<String>) {
+    if (args.isEmpty()) {
+        println("File path not provided!")
+        return
+    }
+
+    Search(args.last())
+}
