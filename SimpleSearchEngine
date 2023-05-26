@@ -13,17 +13,22 @@ class Search(filePath: String) {
     private fun presentMenu() {
         while (true) {
             println("\n=== Menu ===")
-            println("1. Find a person (ALL strategy)")
-            println("2. Find a person (ANY strategy)")
-            println("3. Find a person (NONE strategy)")
-            println("4. Print all people")
+            println("1. Find a person")
+            println("2. Print all people")
             println("0. Exit")
 
             when (readLine()) {
-                "1" -> executeQuery(SearchStrategy.ALL)
-                "2" -> executeQuery(SearchStrategy.ANY)
-                "3" -> executeQuery(SearchStrategy.NONE)
-                "4" -> printAll()
+                "1" -> {
+                    println("Select a matching strategy: ALL, ANY, NONE")
+                    val strategy = readLine()?.trim()?.toUpperCase()
+                    when (strategy) {
+                        "ALL" -> executeQuery(SearchStrategy.ALL)
+                        "ANY" -> executeQuery(SearchStrategy.ANY)
+                        "NONE" -> executeQuery(SearchStrategy.NONE)
+                        else -> println("Invalid strategy!")
+                    }
+                }
+                "2" -> printAll()
                 "0" -> break
                 else -> println("\nIncorrect option! Try again.")
             }
